@@ -1,13 +1,13 @@
-const express = require("express");
+import express from "express";
+import societyRoutes from "./routes/societyRoutes.js";
+
 const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Backend is running...");
-});
+// base path set
+app.use("/api/society", societyRoutes);
 
-const PORT = 8080;
-app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
 });
