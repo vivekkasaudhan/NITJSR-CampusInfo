@@ -1,11 +1,24 @@
-const SocietySchema = new mongoose.Schema({
-  name: String,
+import mongoose from "mongoose";
+
+const societySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+
   email: {
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
+    trim: true,
   },
-  password: String,
+
+  password: {
+    type: String,
+    required: true,
+  },
+
   description: String,
 
   posts: [
@@ -14,12 +27,18 @@ const SocietySchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
+
   verified: {
     type: Boolean,
     default: false,
   },
+
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
+
+const Society = mongoose.model("Society", societySchema);
+
+export default Society;

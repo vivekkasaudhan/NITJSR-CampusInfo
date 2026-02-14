@@ -13,12 +13,14 @@
   "keywords": [],
   "author": "F5",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/vivekkasaudhan/NITJSR-CampusInfo/issues"
   },
   "homepage": "https://github.com/vivekkasaudhan/NITJSR-CampusInfo#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.2.1"
   }
 }
