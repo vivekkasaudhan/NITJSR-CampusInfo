@@ -98,8 +98,7 @@ export const registerSociety = async (req, res) => {
     });
 
     return res.status(201).json({
-      message:
-        "Society registered successfully. Wait for admin approval.",
+      message:"Society registered successfully. Wait for admin approval.",
     });
 
   } catch (error) {
@@ -108,3 +107,58 @@ export const registerSociety = async (req, res) => {
     });
   }
 };
+
+export const logout=async(req,res)=>{
+  try {
+    res.clearCookie("token",{
+      httpOnly:true,
+      secure:false,
+      sameSite:"lax",
+    })
+    return res.json({message:"Logout successful"});
+  } catch (error) {
+    res.status(500).json({message:error.message});
+  }
+}
+
+export const registerUser=async(req,res)=>{
+  try {
+     const { name, email, password } = req.body;
+     const existing=await User.findOne({email});
+     if(existing)return res.status(400).json({message:"user already register"});
+     const hashedPassword = await bcrypt.hash(password, 10);
+     await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+    return res.status(201).json({
+      message:"User registered successfully. Wait for admin approval.",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+}
+
+export const registerAdmin=async(req,res)=>{
+  try {
+     const { name, email, password } = req.body;
+     const existing=await Admin.findOne({email});
+     if(existing)return res.status(400).json({message:"admin already register"});
+     const hashedPassword = await bcrypt.hash(password, 10);
+     await Admin.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+    return res.status(201).json({
+      message:"Admin registered successfully.",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+}
