@@ -1,23 +1,23 @@
 import express from "express";
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-
-dotenv.config(); 
+import adminRoutes from "./routes/adminRoutes.js";
+import userRoutes from "./routes/UserRoutes.js";
 import societyRoutes from "./routes/societyRoutes.js";
-
+import authRoutes from "./routes/authRoutes.js";
+import cookieParser from "cookie-parser";
+import connectDB from "./config/db.js";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
-
+app.use(cookieParser());
 app.use(express.json());
 
 // base path set
+app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/society", societyRoutes);
-const PORT = process.env.PORT || 8000;
+app.use("/api/auth", authRoutes);
 
-
-   app.get("/",(req,res)=>{
-    res.send("Backend is running");
-   })
 app.listen(3000, () => {
-    connectDB();
+  connectDB();
   console.log("Server running on port 3000");
 });
